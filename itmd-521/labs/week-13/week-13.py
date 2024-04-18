@@ -45,13 +45,13 @@ splitDF = df.withColumn('WeatherStation', df['_c0'].substr(5, 6)) \
 splitDF.printSchema()
 splitDF.show(5)
 
-splitDF.write.format("csv").mode("overwrite").option("header", "true").save("s3a://rchaganti/70-uncompressed.csv")
-splitDF.write.format("csv").mode("overwrite").option("header", "true").option("compression", "lz4").save("s3a://rchaganti/70-compressed.csv")
+splitDF.write.format("csv").mode("overwrite").option("header", "true").save("s3a://rchaganti/60-uncompressed.csv")
+splitDF.write.format("csv").mode("overwrite").option("header", "true").option("compression", "lz4").save("s3a://rchaganti/60-compressed.csv")
 
 
 partition_df = splitDF.coalesce(1)
-partition_df.write.format("csv").mode("overwrite").option("header", "true").save("s3a://rchaganti/70.csv")
+partition_df.write.format("csv").mode("overwrite").option("header", "true").save("s3a://rchaganti/60.csv")
 
-splitDF.write.format("parquet").mode("overwrite").option("header", "true").save("s3a://rchaganti/70.parquet")
+splitDF.write.format("parquet").mode("overwrite").option("header", "true").save("s3a://rchaganti/60.parquet")
 
 spark.stop()
