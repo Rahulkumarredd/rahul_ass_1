@@ -27,7 +27,7 @@ average_temp_df = splitDF.select(month(col('ObservationDate')).alias('month'),ye
 average_temp_df.show(15)
 # average_temp_df.write.format("parquet").mode("overwrite").option("header", "true").save("s3a://rchaganti/part-three.parquet")
 
-first_year_df = average_temp_df.select(col('year') == 1961)
+first_year_df = average_temp_df.where(col('year') == 1961)
 
 first_year_df.show(12)
 # first_year_df.write.format("csv").mode("overwrite").option("header", "true").save("s3a://rchaganti/part-three.csv")
