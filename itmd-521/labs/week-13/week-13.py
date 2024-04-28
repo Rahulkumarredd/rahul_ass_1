@@ -15,8 +15,7 @@ conf.set('spark.hadoop.fs.s3a.committer.magic.enabled', 'true')
 conf.set('spark.hadoop.fs.s3a.committer.name', 'magic')
 conf.set("spark.hadoop.fs.s3a.endpoint", "http://infra-minio-proxy-vm0.service.consul")
 
-# Setting the legacy time parser policy to handle date parsing issues
-# conf.set("spark.sql.legacy.timeParserPolicy", "LEGACY")
+
 
 spark = SparkSession.builder.appName("rchaganti convert 60.txt to csv").config('spark.driver.host', 'spark-edge.service.consul').config(conf=conf).getOrCreate()
 
