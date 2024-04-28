@@ -24,12 +24,13 @@ splitDF = spark.read.parquet('s3a://rchaganti/60.parquet')
 # I have selected columns of Date and Temperature then groupBy operation on the month and year columns to group the data by month and year and then applied aggregate function of 'avg' to find Average temperature of AirTemperature and sorted using 'orderBy'
 
 average_temp_df = splitDF.select(month(col('ObservationDate')).alias('month'),year(col('ObservationDate')).alias('year'),col('AirTemperature')).groupBy('month','year').agg(avg('AirTemperature')).orderBy('year','month')
-average_temp_df.show(15)
-average_temp_df.write.format("parquet").mode("overwrite").option("header", "true").save("s3a://rchaganti/part-three.parquet")
 
+# written result format to store in parquet
+average_temp_df.write.format("parquet").mode("overwrite").option("header", "true").save("s3a://rchaganti/part-three.parquet")
+# applied where condition to sel year with only 1961 because description mentioned as 'take only 12 records (only the first year of the decade)'
 first_year_df = average_temp_df.where(col('year') == 1961)
 
-first_year_df.show(12)
+# written in result to store as a csv file
 first_year_df.write.format("csv").mode("overwrite").option("header", "true").save("s3a://rchaganti/part-three.csv")
 
 spark.stop()
