@@ -21,7 +21,7 @@ spark = SparkSession.builder.appName("rchaganti convert 60.txt part 3").config('
 
 splitDF = spark.read.parquet('s3a://rchaganti/60.parquet')
 
-average_temp_df = splitDF.select(month(splitDF('ObservationDate')).alias('month'),year(splitDF('ObservationDate')).alias('year'),splitDF('AirTemperature')).groupBy('month','year').agg(avg('AirTemperature')).orderBy('year','month')
+average_temp_df = splitDF.select(month(col('ObservationDate')).alias('month'),year(col('ObservationDate')).alias('year'),col('AirTemperature')).groupBy('month','year').agg(avg('AirTemperature')).orderBy('year','month')
 average_temp_df.show(15)
 
 spark.stop()
